@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- link css files here -->
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="https://kit.fontawesome.com/caa192534f.js" crossorigin="anonymous"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <header>
+    <!-- navigation -->
+    <nav class="navbar navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
+            width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
+          我的餐廳清單
+        </a>
+      </div>
+    </nav>
+
+    <div class="banner"></div>
+  </header>
+
+  <!-- search bar -->
+  <div class="container search-bar">
+    <div class="search-bar-outer">
+      <div class="search-bar-inner">
+        <form action="/search">
+          <h4 class="mb-2">尋找餐廳：</h4>
+          <div class="input-group">
+            <input type="text" name="keyword" value="{{keyword}}" class="form-control" placeholder="輸入餐廳、分類"
+              aria-label="Restaurant Name..." value="" aria-describedby="search-button">
+            <div class="input-group-append">
+              <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- restaurant list -->
+
+  {{{body}}}
+
+
+  <!-- include javascript files here -->
+  <script src="/javascripts/jquery-3.3.1.js"></script>
+  <script src="/javascripts/popper.js"></script>
+  <script src="/javascripts/bootstrap.js"></script>
+
+</body>
+
+</html>
