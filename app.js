@@ -16,9 +16,9 @@ app.get('/', (req, res) => {
   res.render('index', { restaurants: restaurantList.results })
 })
 
-//設定動態路由
+//詳細介紹功能 (設定動態路由)
 app.get('/restaurants/:restaurant_id', (req, res) => {
-  const getRestaurant = restaurantList.results.find(item => item.id == req.params.restaurant_id)
+  const getRestaurant = restaurantList.results.find(item => item.id.toString() === req.params.restaurant_id)
   res.render('show', { restaurant: getRestaurant })
 })
 
@@ -27,7 +27,6 @@ app.get('/search', (req, res) => {
   console.log(req.query.keyword)
   const keyword = req.query.keyword
   const getRestaurant = restaurantList.results.filter(item => { return item.name.toLowerCase().includes(keyword) || item.category.includes(keyword) })
-  console.log(getRestaurant)
   res.render('index', { restaurants: getRestaurant, keyword: keyword })
 })
 
