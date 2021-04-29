@@ -1,7 +1,13 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
-const restaurantList = require('./restaurant.json')
 const mongoose = require('mongoose')
+
+//1-1 直接取用JSON檔的方法
+//const restaurantList = require('./restaurant.json')
+//1-2 將JSON檔建立資料庫的方法
+const Restaurant = require('./models/restaurant')
+
+
 const app = express()
 const port = 3000
 
@@ -29,21 +35,34 @@ app.set('view engine', 'handlebars')
 
 
 app.get('/', (req, res) => {
-  res.render('index', { restaurants: restaurantList.results })
+  //1-1 直接取用JSON檔的方法
+  //res.render('index', { restaurants: restaurantList.results })
+
+  //1-2 將JSON檔建立資料庫的方法
+  Restaurant.find()
+    .lean()
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(error => console.error(error))
 })
 
 //詳細介紹功能 (設定動態路由)
 app.get('/restaurants/:restaurant_id', (req, res) => {
-  const getRestaurant = restaurantList.results.find(item => item.id.toString() === req.params.restaurant_id)
-  res.render('show', { restaurant: getRestaurant })
+  //1-1 直接取用JSON檔的方法
+  //const getRestaurant = restaurantList.results.find(item => item.id.toString() === req.params.restaurant_id)
+  //res.render('show', { restaurant: getRestaurant })
+
+  //1-2 將JSON檔建立資料庫的方法
+  //const getRestaurant = Restaurant.find(item => item.id.toString() === req.params.restaurant_id)
+  //res.render('show', { restaurant: getRestaurant })
 })
 
 //搜尋功能
 app.get('/search', (req, res) => {
   console.log(req.query.keyword)
   const keyword = req.query.keyword
-  const getRestaurant = restaurantList.results.filter(item => { return item.name.toLowerCase().includes(keyword) || item.category.includes(keyword) })
-  res.render('index', { restaurants: getRestaurant, keyword: keyword })
+  //1-1 直接取用JSON檔的方法
+  //const getRestaurant = restaurantList.results.filter(item => { return item.name.toLowerCase().includes(keyword) || item.category.includes(keyword) })
+  // res.render('index', { restaurants: getRestaurant, keyword: keyword })
 })
 
 
