@@ -39,6 +39,7 @@ app.get('/', (req, res) => {
   //res.render('index', { restaurants: restaurantList.results })
 
   //1-2 將JSON檔建立資料庫的方法
+  // restaurants為資料庫中餐廳資料的稱呼
   Restaurant.find()
     .lean()
     .then(restaurants => res.render('index', { restaurants }))
@@ -52,8 +53,12 @@ app.get('/restaurants/:restaurant_id', (req, res) => {
   //res.render('show', { restaurant: getRestaurant })
 
   //1-2 將JSON檔建立資料庫的方法
-  //const getRestaurant = Restaurant.find(item => item.id.toString() === req.params.restaurant_id)
-  //res.render('show', { restaurant: getRestaurant })
+  const id = req.params.restaurant_id
+  return Restaurant.findById(id)
+    .lean()
+    .then(restaurant => res.render('show', { restaurant }))
+    .catch(error => console.error(error))
+
 })
 
 //搜尋功能
