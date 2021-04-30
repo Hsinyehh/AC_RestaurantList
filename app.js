@@ -121,7 +121,7 @@ app.post('/restaurants/:id/edit/update', (req, res) => {
 })
 
 
-//搜尋功能(尚未完成)
+//搜尋功能
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
   //1-1 直接取用JSON檔的方法
