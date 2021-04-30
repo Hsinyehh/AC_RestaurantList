@@ -10,6 +10,8 @@ header {
   color: #226089;
 }
 
+
+
 .banner {
   position: relative;
   z-index: -1;
@@ -98,4 +100,16 @@ header {
     height: auto;
   }
   
+}
+
+/*新增*/
+
+.card-footer{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.card{
+  display: flex;
+  flex-wrap: wrap;
 }

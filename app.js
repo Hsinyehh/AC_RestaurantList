@@ -7,9 +7,13 @@ const mongoose = require('mongoose')
 //1-2 將JSON檔建立資料庫的方法
 const Restaurant = require('./models/restaurant')
 
-
 const app = express()
 const port = 3000
+
+// 引用 body-parser
+const bodyParser = require('body-parser')
+// 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
+app.use(bodyParser.urlencoded({ extended: true }))
 
 //connnect database
 mongoose.connect('mongodb://localhost/restaurant-list', {
@@ -46,7 +50,8 @@ app.get('/', (req, res) => {
     .catch(error => console.error(error))
 })
 
-//詳細介紹功能 (設定動態路由)
+
+//介紹餐廳 
 app.get('/restaurants/:restaurant_id', (req, res) => {
   //1-1 直接取用JSON檔的方法
   //const getRestaurant = restaurantList.results.find(item => item.id.toString() === req.params.restaurant_id)
@@ -60,6 +65,27 @@ app.get('/restaurants/:restaurant_id', (req, res) => {
     .catch(error => console.error(error))
 
 })
+
+//刪除餐廳 
+app.post('/restaurants/:restaurant_id/delete', (req, res) => {
+
+  const id = req.params.restaurant_id
+  return Restaurant.findById(id)
+    .then(restaurant => restaurant.remove())
+    .then(() => res.redirect('/'))
+    .catch(error => console.error(error))
+
+})
+
+//新增餐廳
+app.get('/new', (req, res) => {
+  res.render('new')
+})
+
+
+//編輯餐廳
+
+
 
 //搜尋功能
 app.get('/search', (req, res) => {
