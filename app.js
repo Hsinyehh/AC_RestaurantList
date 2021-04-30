@@ -12,6 +12,7 @@ const port = 3000
 
 // 引用 body-parser
 const bodyParser = require('body-parser')
+const restaurant = require('./models/restaurant')
 // 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -52,13 +53,13 @@ app.get('/', (req, res) => {
 
 
 //介紹餐廳 
-app.get('/restaurants/:restaurant_id', (req, res) => {
+app.get('/restaurants/:id', (req, res) => {
   //1-1 直接取用JSON檔的方法
-  //const getRestaurant = restaurantList.results.find(item => item.id.toString() === req.params.restaurant_id)
-  //res.render('show', { restaurant: getRestaurant })
+  //const getRestaurant = restaurantList.results.find(item => item.id.toString() === req.params:id)
+  //res.render('show', { restaurant: getRestaurant .)
 
   //1-2 將JSON檔建立資料庫的方法
-  const id = req.params.restaurant_id
+  const id = req.params.id
   return Restaurant.findById(id)
     .lean()
     .then(restaurant => res.render('show', { restaurant }))
@@ -67,9 +68,9 @@ app.get('/restaurants/:restaurant_id', (req, res) => {
 })
 
 //刪除餐廳 
-app.post('/restaurants/:restaurant_id/delete', (req, res) => {
+app.post('/restaurants/:id/delete', (req, res) => {
 
-  const id = req.params.restaurant_id
+  const id = req.params.id
   return Restaurant.findById(id)
     .then(restaurant => restaurant.remove())
     .then(() => res.redirect('/'))
@@ -90,15 +91,46 @@ app.post('/restaurants', (req, res) => {
 })
 
 //編輯餐廳
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then(restaurant => res.render('edit', { restaurant }))
+    .catch(error => console.error(error))
+})
 
 
+app.post('/restaurants/:id/edit/update', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .then(restaurant => {
+      restaurant.name = req.body.name
+      restaurant.name_en = req.body.name_en
+      restaurant.category = req.body.category
+      restaurant.image = req.body.image
+      restaurant.location = req.body.location
+      restaurant.phone = req.body.phone
+      restaurant.google_map = req.body.google_map
+      restaurant.rating = req.body.rating
+      restaurant.description = req.body.description
+      return restaurant.save()
+    })
+    .then(() => res.redirect(`/restaurants/${id}`))
+    .catch(error => console.error(error))
 
-//搜尋功能(還沒做好)
+})
+
+
+//搜尋功能(尚未完成)
 app.get('/search', (req, res) => {
   console.log(req.query.keyword)
   const keyword = req.query.keyword
   //1-1 直接取用JSON檔的方法
   //const getRestaurant = restaurantList.results.filter(item => { return item.name.toLowerCase().includes(keyword) || item.category.includes(keyword) })
+  // res.render('index', { restaurants: getRestaurant, keyword: keyword })
+
+  //1-2 將JSON檔建立資料庫的方法
+  //const getRestaurant = Restaurant.filter(item => { return item.name.toLowerCase().includes(keyword) || item.category.includes(keyword) })
   // res.render('index', { restaurants: getRestaurant, keyword: keyword })
 })
 
