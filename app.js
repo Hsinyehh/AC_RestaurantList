@@ -82,12 +82,18 @@ app.get('/new', (req, res) => {
   res.render('new')
 })
 
+app.post('/restaurants', (req, res) => {
+  return Restaurant.create(req.body)
+    .then(() => res.redirect('/'))
+    .catch(error => console.error(error))
+
+})
 
 //編輯餐廳
 
 
 
-//搜尋功能
+//搜尋功能(還沒做好)
 app.get('/search', (req, res) => {
   console.log(req.query.keyword)
   const keyword = req.query.keyword

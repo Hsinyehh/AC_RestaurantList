@@ -109,7 +109,7 @@ header {
   justify-content: flex-end;
 }
 
-.card{
+.card-display{
   display: flex;
   flex-wrap: wrap;
 }
