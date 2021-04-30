@@ -123,15 +123,21 @@ app.post('/restaurants/:id/edit/update', (req, res) => {
 
 //搜尋功能(尚未完成)
 app.get('/search', (req, res) => {
-  console.log(req.query.keyword)
   const keyword = req.query.keyword
   //1-1 直接取用JSON檔的方法
   //const getRestaurant = restaurantList.results.filter(item => { return item.name.toLowerCase().includes(keyword) || item.category.includes(keyword) })
-  // res.render('index', { restaurants: getRestaurant, keyword: keyword })
+  //res.render('index', { restaurants: getRestaurant, keyword: keyword })
 
   //1-2 將JSON檔建立資料庫的方法
-  //const getRestaurant = Restaurant.filter(item => { return item.name.toLowerCase().includes(keyword) || item.category.includes(keyword) })
-  // res.render('index', { restaurants: getRestaurant, keyword: keyword })
+  return Restaurant.find({
+    "$or": [
+      { "name": { $regex: `${keyword}`, $options: '$i' } },
+      { "category": { $regex: `${keyword}`, $options: '$i' } }
+    ]
+  })
+    .lean()
+    .then(rest => res.render('index', { restaurants: rest, keyword: keyword }))
+
 })
 
 
