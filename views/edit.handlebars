@@ -5,7 +5,7 @@
         <div class="card-body">
           <h4 class="card-title text-center"><i class="fa fa-plus" aria-hidden="true"></i> 新增餐廳</h4>
           <hr>
-          <form action="/restaurants/{{restaurant._id}}/edit/update" method="POST">
+          <form action="/restaurants/{{restaurant._id}}?_method=PUT" method="POST">
 
             <div class="form-row">
               <div class="form-group col-md-6">
