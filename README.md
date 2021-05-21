@@ -33,3 +33,6 @@
  `node models/seeds/restaurantSeeder.js`
 
 * 啟動完成請至 http://localhost:3000/ 
+
+## 網站示意
+* ![GITHUB](https://img.onl/BsnWhK)
