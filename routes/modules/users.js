@@ -21,11 +21,23 @@ router.get('/register', (req, res) => {
 
 router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
+  const errors = []
+  if (!name || !email || !password || !confirmPassword) {
+    errors.push({ message: 'The Form is not completed yet.' })
+  }
+  if (name !== confirmPassword) {
+    errors.push({ message: 'The passwords are not consistent.' })
+  }
+  if (errors.length) {
+    return res.render('register', { name, email, password, confirmPassword, errors })
+  }
+
+
   User.findOne({ email })
     .then(user => {
       if (user) {
-        console.log('User already exits')
-        res.render('register', { name, email, password, confirmPassword })
+        errors.push({ message: 'The Email already exits.' })
+        res.render('register', { name, email, password, confirmPassword, errors })
       }
       else {
         return User.create({ name, email, password })
@@ -37,6 +49,7 @@ router.post('/register', (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
+  req.flash('success_msg', 'Logout Successfully!')
   req.logout()
   res.redirect('/users/login')
 })
