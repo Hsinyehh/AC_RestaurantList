@@ -14,7 +14,8 @@ router.get('/:id', (req, res) => {
 
   //1-2 將JSON檔建立資料庫的方法
   const id = req.params.id
-  return Restaurant.findById(id)
+  const userId = req.user._id
+  return Restaurant.findOne({ id, userId })
     .lean()
     .then(restaurant => res.render('show', { restaurant }))
     .catch(error => console.error(error))
@@ -24,7 +25,20 @@ router.get('/:id', (req, res) => {
 
 //新增儲存餐廳
 router.post('/', (req, res) => {
-  return Restaurant.create(req.body)
+  const userId = req.user._id
+  return Restaurant.create({
+    id,
+    name,
+    name_en,
+    category,
+    image,
+    location,
+    phone,
+    google_map,
+    rating,
+    description,
+    userId
+  })
     .then(() => res.redirect('/'))
     .catch(error => console.error(error))
 
@@ -34,7 +48,8 @@ router.post('/', (req, res) => {
 router.delete('/:id', (req, res) => {
 
   const id = req.params.id
-  return Restaurant.findById(id)
+  const userId = req.user._id
+  return Restaurant.findOne({ id, userId })
     .then(restaurant => restaurant.remove())
     .then(() => res.redirect('/'))
     .catch(error => console.error(error))
@@ -44,7 +59,8 @@ router.delete('/:id', (req, res) => {
 //編輯餐廳
 router.get('/:id/edit', (req, res) => {
   const id = req.params.id
-  return Restaurant.findById(id)
+  const userId = req.user._id
+  return Restaurant.findById({ id, userId })
     .lean()
     .then(restaurant => res.render('edit', { restaurant }))
     .catch(error => console.error(error))
@@ -53,7 +69,8 @@ router.get('/:id/edit', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const id = req.params.id
-  return Restaurant.findById(id)
+  const userId = req.user._id
+  return Restaurant.findById({ id, userId })
     .then(restaurant => {
       restaurant.name = req.body.name
       restaurant.name_en = req.body.name_en
