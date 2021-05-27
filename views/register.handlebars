@@ -1,0 +1,42 @@
+<div class="container py-5">
+  <div class="row">
+    <div class="col-sm-8 col-xl-6 mx-auto">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title text-center">REGISTER</h4>
+          <hr>
+          <form action="/users/register" method="POST">
+
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name" value="{{ name }}">
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email"
+                value="{{ email }}">
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password"
+                value="{{ password }}">
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <input type="password" class="form-control" name="confirmPassword" id="confirmPassword"
+                placeholder="Confirm Password" value="{{ confirmPassword }}">
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-warning btn-block">Register</button>
+            </div>
+          </form>
+          <p class="mt-4">Have an Account?<a href="/users/login"> Login</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
