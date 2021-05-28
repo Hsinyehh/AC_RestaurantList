@@ -38,4 +38,10 @@
 * 啟動完成請至 http://localhost:3000/ 
 
 ## 網站示意
-* ![GITHUB](https://img.onl/BsnWhK)
+* 登入畫面
+* ![GITHUB](https://img.onl/YBYz50)
+* 註冊畫面
+* ![GITHUB](https://img.onl/BFAGeG)
+* 首頁
+* ![GITHUB](https://img.onl/1mKJ0J)
+* ![GITHUB](https://img.onl/e2r9SW)
