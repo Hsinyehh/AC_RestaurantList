@@ -15,11 +15,12 @@ router.get('/', (req, res) => {
   //res.render('index', { restaurants: getRestaurant, keyword: keyword })
 
   //1-2 將JSON檔建立資料庫的方法
+  const userId = req.user._id
   return Restaurant.find({
     "$or": [
       { "name": { $regex: `${keyword}`, $options: '$i' } },
       { "category": { $regex: `${keyword}`, $options: '$i' } }
-    ]
+    ], userId
   })
     .lean()
     .then(rest => res.render('index', { restaurants: rest, keyword: keyword }))
