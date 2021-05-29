@@ -15,40 +15,28 @@ const db = require('../../config/mongoose')
 
 //取得資料庫連線狀態
 
-db.once('open', () => {
+db.once('open', async () => {
   console.log('Mongodb connected!')
+  try {
+    for (let i = 0; i < userList.length; i++) {
+      const salt = await bcrypt.genSalt(10)
+      const hash = await bcrypt.hash(userList[i].password, salt)
+      const newUser = await User.create({ ...userList[i], password: hash })
+      let userId = newUser._id
 
-  for (let i = 0; i < userList.length; i++) {
-    bcrypt
-      .genSalt(10)
-      .then(salt => bcrypt.hash(userList[i].password, salt))
-      .then(hash => User.create({ name: userList[i].name, email: userList[i].email, password: hash }))
-      .then(user => {
-        let userId = user._id
-        let j = i * 3
-        //取得餐廳JSON檔
-        return Promise.all(Array.from(
-          { length: 3 },
-          (_, j) =>
-            Restaurant.create({
-              name: restaurantList.results[j].name,
-              name_en: restaurantList.results[j].name_en,
-              category: restaurantList.results[j].category,
-              image: restaurantList.results[j].image,
-              location: restaurantList.results[j].location,
-              phone: restaurantList.results[j].phone,
-              google_map: restaurantList.results[j].google_map,
-              rating: restaurantList.results[j].rating,
-              description: restaurantList.results[j].description,
-              userId: userId
-            })
-        ))
-      })
-      .then(() => {
-        console.log('done.')
-        process.exit()
-      })
-
+      for (let j = i * 3; j < (i + 1) * 3; j++) {
+        await Restaurant.create({
+          ...restaurantList.results[j], userId
+        })
+      }
+      console.log(`Item-${i} is Done.`)
+    }
+    console.log('The seeder is done.')
+    process.exit()
+  }
+  catch (error) {
+    console.log(error)
+    process.exit()
   }
 })
 
