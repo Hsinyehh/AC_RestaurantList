@@ -26,7 +26,7 @@ router.post('/register', (req, res) => {
   if (!name || !email || !password || !confirmPassword) {
     errors.push({ message: 'The Form is not completed yet.' })
   }
-  if (name !== confirmPassword) {
+  if (password !== confirmPassword) {
     errors.push({ message: 'The passwords are not consistent.' })
   }
   if (errors.length) {

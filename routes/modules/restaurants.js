@@ -1,4 +1,5 @@
 const express = require('express')
+const restaurant = require('../../models/restaurant')
 const router = express.Router()
 //1-1 直接取用JSON檔的方法
 //const restaurantList = require('./restaurant.json')
@@ -28,15 +29,7 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   const userId = req.user._id
   return Restaurant.create({
-    name: req.body.name,
-    name_en: req.body.name_en,
-    category: req.body.category,
-    image: req.body.image,
-    location: req.body.location,
-    phone: req.body.phone,
-    google_map: req.body.google_map,
-    rating: req.body.rating,
-    description: req.body.description,
+    ...req.body,
     userId: userId
   })
     .then(() => res.redirect('/'))
@@ -72,16 +65,7 @@ router.put('/:id', (req, res) => {
   const userId = req.user._id
   return Restaurant.findOne({ _id, userId })
     .then(restaurant => {
-      restaurant.name = req.body.name
-      restaurant.name_en = req.body.name_en
-      restaurant.category = req.body.category
-      restaurant.image = req.body.image
-      restaurant.location = req.body.location
-      restaurant.phone = req.body.phone
-      restaurant.google_map = req.body.google_map
-      restaurant.rating = req.body.rating
-      restaurant.description = req.body.description
-      restaurant.userId = userId
+      restaurant = Object.assign(restaurant, req.body)
       return restaurant.save()
     })
     .then(() => res.redirect(`/restaurants/${_id}`))
