@@ -22,19 +22,19 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="rating">評分</label>
-                <input type="number" class="form-control" name="rating" placeholder="1-5分">
+                <input type="number" class="form-control" name="rating" step="0.1" min="0" max="5" placeholder="1-5分">
                 <small id="ratingDescrip" class="form-text text-muted">評分請填1-5分</small>
               </div>
               <div class="form-group col-md-6">
                 <label for="category">餐廳類型</label>
                 <select name="category" class="form-control">
-                  <option selected>選擇餐廳類型</option>
-                  <option>美式料理</option>
-                  <option>義式料理</option>
-                  <option>台式料理</option>
-                  <option>日式料理</option>
-                  <option>東南亞料理</option>
-                  <option>中東料理</option>
+                  <option selected disabled>選擇餐廳類型</option>
+                  <option value="美式料理">美式料理</option>
+                  <option value="義式料理">義式料理</option>
+                  <option value="台式料理">台式料理</option>
+                  <option value="日式料理">日式料理</option>
+                  <option value="東南亞料理">東南亞料理</option>
+                  <option value="中東料理">中東料理</option>
                 </select>
               </div>
 
@@ -50,7 +50,9 @@
             </div>
             <div class="form-group">
               <label for="phone">電話</label>
-              <input type="text" class="form-control" name="phone" placeholder="02 2363 xxxx">
+              <input type="number" class="form-control" name="phone" placeholder="022363xxxx"
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                maxlength="10">
             </div>
             <div class="form-group">
               <label for="google_map">GoogleMap 連結</label>
@@ -59,7 +61,8 @@
 
             <div class="form-group">
               <label for="description">餐廳介紹</label>
-              <textarea class="form-control" name="description" rows="3"></textarea>
+              <textarea class="form-control" name="description" rows="3" maxlength="250"></textarea>
+              <small id="descriptHelp" class="form-text text-muted">字數上限250字</small>
             </div>
             <div class="text-center">
               <button type="submit" class="btn btn-danger">Submit</button>

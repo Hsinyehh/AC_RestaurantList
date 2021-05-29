@@ -18,7 +18,11 @@ const app = express()
 const port = process.env.PORT
 
 //layout setup
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main', helpers: {
+    eq: function (a, b) { return a === b }
+  }
+}))
 app.set('view engine', 'handlebars')
 
 app.use(session({

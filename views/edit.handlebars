@@ -3,7 +3,7 @@
     <div class="col-sm-12 col-xl-8 mx-auto">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title text-center"><i class="fa fa-plus" aria-hidden="true"></i> 新增餐廳</h4>
+          <h4 class="card-title text-center"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>編輯餐廳</h4>
           <hr>
           <form action="/restaurants/{{restaurant._id}}?_method=PUT" method="POST">
 
@@ -22,20 +22,20 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="rating">評分</label>
-                <input type="number" class="form-control" name="rating" placeholder="1-5分"
+                <input type="number" class="form-control" name="rating" step="0.1" min="0" max="5" placeholder="1-5分"
                   value="{{ restaurant.rating }}">
                 <small id="ratingDescrip" class="form-text text-muted">評分請填1-5分</small>
               </div>
               <div class="form-group col-md-6">
                 <label for="category">餐廳類型</label>
                 <select name="category" class="form-control" value="{{ restaurant.category }}">
-                  <option selected>選擇餐廳類型</option>
-                  <option>美式料理</option>
-                  <option>義式料理</option>
-                  <option>台式料理</option>
-                  <option>日式料理</option>
-                  <option>東南亞料理</option>
-                  <option>中東料理</option>
+                  <option disabled>選擇餐廳類型</option>
+                  <option value="美式料理" {{#if (eq restaurant.category "美式料理" )}}selected{{/if}}>美式料理</option>
+                  <option value="義式料理" {{#if (eq restaurant.category "義式料理" )}}selected{{/if}}>義式料理</option>
+                  <option value="台式料理" {{#if (eq restaurant.category "台式料理" )}}selected{{/if}}>台式料理</option>
+                  <option value="日式料理" {{#if (eq restaurant.category "日式料理" )}}selected{{/if}}>日式料理</option>
+                  <option value="東南亞料理" {{#if (eq restaurant.category "東南亞料理" )}}selected{{/if}}>東南亞料理</option>
+                  <option value="中東料理" {{#if (eq restaurant.category "中東料理" )}}selected{{/if}}>中東料理</option>
                 </select>
               </div>
 
@@ -52,7 +52,7 @@
             </div>
             <div class="form-group">
               <label for="phone">電話</label>
-              <input type="text" class="form-control" name="phone" placeholder="02 2363 xxxx"
+              <input type="text" class="form-control" name="phone" placeholder="02 2363xxxx" pattern="[1-9]{2}[0-9]{8}"
                 value="{{ restaurant.phone }}">
             </div>
             <div class="form-group">
@@ -63,7 +63,9 @@
 
             <div class="form-group">
               <label for="description">餐廳介紹</label>
-              <textarea class="form-control" name="description" rows="3">{{restaurant.description}}</textarea>
+              <textarea class="form-control" name="description" rows="3"
+                maxlength="250">{{restaurant.description}}</textarea>
+              <small id="descriptHelp" class="form-text text-muted">字數上限250字</small>
             </div>
             <div class="text-center">
               <button type="submit" class="btn btn-danger">Save</button>
