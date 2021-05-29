@@ -13,8 +13,9 @@
                 <input type="text" class="form-control" name="name" placeholder="XXX 餐廳">
               </div>
               <div class="form-group col-md-6">
-                <label for="name_en">英文餐廳名稱</label>
-                <input type="text" class="form-control" name="name_en" placeholder="XXX Restaurant">
+                <label for="name_en">餐廳名稱(英文)</label>
+                <input type="text" class="form-control" name="name_en" pattern="[a-zA-Z,]*"
+                  placeholder="XXX Restaurant">
               </div>
 
             </div>
@@ -42,7 +43,7 @@
 
             <div class="form-group">
               <label for="image">餐廳圖片連結</label>
-              <input type="url" class="form-control" name="image" placeholder="http://...">
+              <input type="url" class="form-control" name="image" pattern="https?://.+" placeholder="http://...">
             </div>
             <div class="form-group">
               <label for="location">地址</label>
@@ -50,13 +51,13 @@
             </div>
             <div class="form-group">
               <label for="phone">電話</label>
-              <input type="number" class="form-control" name="phone" placeholder="022363xxxx"
-                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                maxlength="10">
+              <input type="string" class="form-control" name="phone" placeholder="02 2363 xxxx" pattern="[0-9\s]+"
+                maxlength="12">
+              <small id="descriptHelp" class="form-text text-muted">請按照電話格式填寫</small>
             </div>
             <div class="form-group">
               <label for="google_map">GoogleMap 連結</label>
-              <input type="url" class="form-control" name="google_map" placeholder="http://...">
+              <input type="url" class="form-control" name="google_map" pattern="https?://.+" placeholder="http://...">
             </div>
 
             <div class="form-group">
